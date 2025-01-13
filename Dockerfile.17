@@ -1,4 +1,4 @@
-FROM postgres:17
+FROM pgduckdb/pgduckdb:17-v0.2.0
 
 # Install OpenSSL and sudo
 RUN apt-get update && apt-get install -y openssl sudo
