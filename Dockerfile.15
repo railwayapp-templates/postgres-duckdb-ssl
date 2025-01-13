@@ -1,5 +1,8 @@
 FROM pgduckdb/pgduckdb:15-v0.2.0
 
+# Switch to root user
+USER root
+
 # Install OpenSSL and sudo
 RUN apt-get update && apt-get install -y openssl sudo
 
