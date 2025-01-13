@@ -34,6 +34,13 @@ if [ -f "$POSTGRES_CONF_FILE" ] && [ ! -f "$SSL_DIR/server.crt" ]; then
   bash "$INIT_SSL_SCRIPT"
 fi
 
+# Ensure correct ownership of SSL files
+if [ -d "$SSL_DIR" ]; then
+  echo "Ensuring correct SSL file ownership..."
+  sudo chown postgres:postgres "$SSL_DIR"/*
+  sudo chmod 600 "$SSL_DIR"/*.key
+fi
+
 # unset PGHOST to force psql to use Unix socket path
 # this is specific to Railway and allows
 # us to use PGHOST after the init

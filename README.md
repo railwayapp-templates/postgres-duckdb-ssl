@@ -27,3 +27,15 @@ When a redeploy or restart is done the certificates expiry is checked, if it has
 ### A note about ports
 
 By default, this image is hardcoded to listen on port `5432` regardless of what is set in the `PGPORT` environment variable. We did this to allow connections to the postgres service over the `RAILWAY_TCP_PROXY_PORT`.  If you need to change this behavior, feel free to build your own image without passing the `--port` parameter to the `CMD` command in the Dockerfile.
+
+### Moving from timescaledb to duckdb
+
+If you are moving from timescaledb to duckdb, you will need update the source image of your service and then run the following SQL commands to enable duckdb:
+
+```sql
+DROP EXTENSION IF EXISTS timescaledb CASCADE;
+
+ALTER SYSTEM SET shared_preload_libraries = 'pg_duckdb';
+
+CREATE EXTENSION IF NOT EXISTS pg_duckdb;
+```
